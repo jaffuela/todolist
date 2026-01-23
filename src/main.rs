@@ -1,11 +1,14 @@
 use serde::{Serialize, Deserialize};
 use std::fs;
+use chrono::NaiveTime;
 
 #[derive(Serialize, Deserialize)]
 struct Task {
     id: usize,
     title: String,
     done: bool,
+    start: Option<NaiveTime>,
+    end: Option<NaiveTime>
 }
 
 #[derive(Serialize, Deserialize)]
