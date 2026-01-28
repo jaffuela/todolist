@@ -103,7 +103,7 @@ impl TodoApp {
     fn get_or_create_user(&mut self, username: &str) -> &mut TodoList{
         self.users.entry(username.to_string()).or_insert_with(|| TodoList::new())
     }
-    fn add_task(&mut self, username: &str, title: String, start: Option<NaiveTime>, end: Option<NaiveTime>){
+    pub(crate) fn add_task(&mut self, username: &str, title: String, start: Option<NaiveTime>, end: Option<NaiveTime>){
         let list = self.get_or_create_user(username);
         list.add(title,start,end);
     }
@@ -135,6 +135,12 @@ impl TodoApp {
             list.remove(id);
         }
     }
+}
+#[derive(Serialize, Deserialize)]
+pub struct TaskInput{
+    pub title: String,
+    pub start: Option<NaiveTime>,
+    pub end: Option<NaiveTime>,
 }
 
 fn main() {
