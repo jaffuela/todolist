@@ -27,3 +27,13 @@ pub async fn post_tasks(
     app.add_task(&user,input.title,input.start,input.end);
     HttpResponse::Created().finish()
 }
+
+pub async fn delete_task(
+    data: web::Data<Mutex<TodoApp>>,
+    path: web::Path<(String, usize)>,
+) -> impl Responder{
+    let mut app = data.lock().unwrap();
+    let (user, task_id) = path.into_inner(); // user = "alice", task_id = 3
+    app.remove_task(&user,task_id);
+    HttpResponse::NoContent().finish()
+}
