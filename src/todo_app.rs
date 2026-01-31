@@ -130,33 +130,15 @@ impl TodoApp {
             list.mark_done(id);
         }
     }
-    fn remove_task(&mut self, username: &str, id: usize){
+    pub(crate) fn remove_task(&mut self, username: &str, id: usize){
         if let Some(list) = self.users.get_mut(username) {
             list.remove(id);
         }
     }
 }
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize,Debug)]
 pub struct TaskInput{
     pub title: String,
     pub start: Option<NaiveTime>,
     pub end: Option<NaiveTime>,
-}
-
-fn main() {
-    let mut todo_list = TodoList::new();
-    todo_list.list();
-    let start = NaiveTime::from_hms_opt(9, 0, 0);
-    let end = NaiveTime::from_hms_opt(10, 30, 0);
-    todo_list.add(String::from("Réviser Rust"),start,end);
-    todo_list.mark_done(0);
-    todo_list.save("todo_list.json");
-    todo_list.remove(0);
-    let mut app = TodoApp::new();
-    let tache = "Réviser maths".to_string();
-    let tache2 = "Faire du sport".to_string();
-    app.add_task("Toto",tache,NaiveTime::from_hms_opt(15,0,0),NaiveTime::from_hms_opt(15,45,0));
-    app.add_task("Toto",tache2,NaiveTime::from_hms_opt(14,0,0),NaiveTime::from_hms_opt(15,45,0));
-    app.mark_done("Toto",0);
-    app.list_tasks("Toto");
 }
